@@ -1,0 +1,91 @@
+% LIPIcs skeleton for ESEM 2026 Emerging Results submission.
+% Double-anonymous. Do not include author names, affiliations, or grants.
+\documentclass[a4paper,UKenglish,cleveref,autoref,thm-restate]{lipics-v2021}
+
+\bibliographystyle{plainurl}
+
+\title{When Does Adaptive Query Execution Pick the Wrong Join?\\
+       An Empirical Study of Strategy Selection in Apache Spark}
+\titlerunning{When Does AQE Pick the Wrong Join?}
+
+% Anonymous author block.
+\author{Anonymous}{Anonymous}{}{}{}
+\authorrunning{Anonymous}
+\Copyright{Anonymous}
+
+\ccsdesc[500]{Information systems~Query optimization}
+\ccsdesc[300]{Software and its engineering~Software performance}
+
+\keywords{Apache Spark, adaptive query execution, joins, empirical evaluation}
+
+\category{Emerging Results}
+\relatedversion{}
+\supplement{Replication package at \url{<ANONYMIZED_URL>}}
+
+\hideLIPIcs
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Apache Spark's Adaptive Query Execution (AQE) re-decides physical join
+strategies at runtime using statistics gathered after intermediate shuffles.
+We empirically measure how often this decision matches an oracle obtained by
+forcing each viable strategy and characterise the workload features that
+predict mismatches. On TPC-DS SF=1000 and TPC-H SF=1000, AQE's choice differs
+from the fastest viable strategy on a non-trivial fraction of join sites.
+Mismatches are concentrated in plans where the estimated and actual build-side
+sizes diverge and where the post-shuffle partition size exceeds the L3 cache.
+We demonstrate that a configuration-level adjustment recovers part of the gap
+without code changes, and we outline a longer-term research agenda toward
+cache-aware adaptive planning.
+\end{abstract}
+
+\section{Introduction}
+% Motivation: AQE re-plans at runtime. Open question: does it pick the best?
+% Contribution bullets:
+%  - empirical decision-accuracy measurement on TPC-DS and TPC-H
+%  - feature-level characterisation of failures
+%  - config-level mitigation as initial evidence
+% Scope: emerging results; full system fix is future work.
+
+\section{Background}
+\subsection{Join physical operators in Spark}
+% Brief: BHJ, SHJ, SMJ. Memory and network costs.
+\subsection{Adaptive Query Execution}
+% Brief: DynamicJoinSelection, OptimizeSkewedJoin, CoalesceShufflePartitions.
+
+\section{Research Questions}
+\label{sec:rq}
+% RQ1, RQ2, RQ3 verbatim from docs/research-questions.md.
+
+\section{Method}
+\label{sec:method}
+% Cluster, workloads, planner modes, repetitions, statistical analysis.
+% Forward-reference docs/methodology.md.
+
+\section{Results}
+\subsection{RQ1: AQE decision accuracy}
+\subsection{RQ2: Predictors of mismatch}
+\subsection{RQ3: Configuration-level mitigation}
+
+\section{Threats to Validity}
+% Construct / internal / external / conclusion. Forward-reference
+% docs/threats-to-validity.md condensed.
+
+\section{Related Work}
+% Cache-aware joins in DBs (third-person): Shatdal et al., Kim et al., Balkesen
+% et al., Schuh et al. Plus AQE / Photon / Velox style runtime adaptation.
+
+\section{Discussion and Future Work}
+% Failure mode taxonomy implies system work: cache-aware partition sizing,
+% in-task radix re-partitioning, spillable broadcast hash relation.
+
+\section*{Data Availability}
+All scripts, configurations, query lists, and analysis notebooks are available
+as an anonymised replication package at \url{<ANONYMIZED_URL>}. Raw Spark
+event logs and processed CSV summaries are included.
+
+\bibliography{references}
+
+\end{document}

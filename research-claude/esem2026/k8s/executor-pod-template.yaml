@@ -1,0 +1,63 @@
+# Executor pod template for cache-aware SHJ experiments.
+# Notes:
+#  - hostPID is true so `perf` on the host can target executor JVMs by PID.
+#  - SYS_ADMIN + PERFMON capabilities allow perf inside the container if needed.
+#  - hostPath volumes expose node-local TPC-DS shards and async-profiler.
+#
+# Replace IMAGE_PLACEHOLDER before use, e.g.:
+#   sed "s|IMAGE_PLACEHOLDER|${REGISTRY}/spark:${TAG}|g" executor-pod-template.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    mascots-role: executor
+spec:
+  hostPID: true
+  containers:
+    - name: spark-kubernetes-executor
+      image: IMAGE_PLACEHOLDER
+      securityContext:
+        privileged: false
+        capabilities:
+          add:
+            - SYS_ADMIN
+            - PERFMON
+            - SYS_PTRACE
+      resources:
+        requests:
+          cpu: "8"
+          memory: "28Gi"
+        limits:
+          cpu: "8"
+          memory: "28Gi"
+      volumeMounts:
+        - name: tpcds-data
+          mountPath: /data/tpcds
+          readOnly: true
+        - name: async-profiler
+          mountPath: /opt/async-profiler
+          readOnly: true
+        - name: perf-output
+          mountPath: /perf-output
+  volumes:
+    - name: tpcds-data
+      hostPath:
+        path: /mnt/local/tpcds
+        type: Directory
+    - name: async-profiler
+      hostPath:
+        path: /opt/async-profiler
+        type: Directory
+    - name: perf-output
+      hostPath:
+        path: /var/log/mascots-perf
+        type: DirectoryOrCreate
+  # Pin executors to nodes that have a local TPC-DS shard.
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: mascots.tpcds/has-shard
+                operator: In
+                values: ["true"]
