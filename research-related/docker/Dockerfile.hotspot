@@ -1,0 +1,35 @@
+# Reproduces the HotSpot screening image (gihong96/spark-screening:v1) for the GC study.
+#
+# v1 (recovered from its image history) = apache/spark:4.1.2  (Eclipse Temurin 21.0.11,
+# Spark 4.1.2, entrypoint /opt/entrypoint.sh, user `spark`)  +  S3A jars  +  Python/JupyterLab
+# +  PySpark notebook files under /work (screening.py, tpc_pyspark.py, run_screening.ipynb,
+# run_nb_cells.py, log4j2-aqe.properties, queries/).
+#
+# This Dockerfile reproduces everything EXCEPT the /work notebook files — those are only
+# needed for the Jupyter workflow, NOT for the run-screening.sh Scala-jar path (which loads
+# the workload from s3a://…/jars/sql-workloads-1.0.jar at submit time). To recover them from
+# the published v1, see README ("extract /work").
+#
+# Build (amd64; do NOT overwrite the working :v1 — push to a repro tag):
+#   docker buildx build --platform linux/amd64 -f Dockerfile.hotspot \
+#     -t gihong96/spark-screening:v1-repro [--build-arg WITH_JUPYTER=1] --push .
+
+FROM apache/spark:4.1.2
+USER root
+
+# --- S3A support (exact versions baked into v1) — REQUIRED ---
+# run-screening.sh reads the workload jar, TPC data, and event logs over s3a://.
+RUN cd /opt/spark/jars \
+ && curl -fsSLO https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.4.2/hadoop-aws-3.4.2.jar \
+ && curl -fsSLO https://repo1.maven.org/maven2/software/amazon/awssdk/bundle/2.29.52/bundle-2.29.52.jar
+
+# --- Python + JupyterLab (optional; only for v1's notebook workflow) ---
+ARG WITH_JUPYTER=0
+RUN if [ "$WITH_JUPYTER" = "1" ]; then \
+      apt-get update \
+   && apt-get install -y --no-install-recommends python3 python3-pip \
+   && rm -rf /var/lib/apt/lists/* \
+   && pip3 install --no-cache-dir --break-system-packages jupyterlab jupyter-server-proxy ; \
+    fi
+
+USER spark

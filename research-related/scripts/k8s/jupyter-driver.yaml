@@ -1,0 +1,101 @@
+# Client-mode Spark driver running JupyterLab inside the cluster (B plan).
+#
+# The notebook kernel IS the Spark driver. Running it on a spark-data node lets it
+# read the /mnt/bench hostPath directly (register_tables) and reach executors over
+# the pod network, so DATA_BASE can be file:///mnt/bench (no S3 needed) and the
+# client-mode BindException disappears.
+#
+# Apply:   kubectl apply -f jupyter-driver.yaml
+# Code in: kubectl cp <local> spark/<pod>:/work/
+# Open:    http://static.250.169.217.95.clients.your-server.de/jupyter  (basic-auth)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: screening-jupyter
+  namespace: spark
+  labels: { app: screening-jupyter }
+spec:
+  type: ClusterIP
+  selector: { app: screening-jupyter }
+  ports:
+    - name: http
+      port: 8888
+      targetPort: 8888
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: screening-jupyter-route
+  namespace: spark
+spec:
+  entryPoints: [web]
+  routes:
+    - kind: Rule
+      match: PathPrefix(`/jupyter`)
+      middlewares:
+        - name: basic-auth
+      services:
+        - name: screening-jupyter
+          port: 8888
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: screening-jupyter
+  namespace: spark
+  labels: { app: screening-jupyter }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: screening-jupyter }
+  template:
+    metadata:
+      labels: { app: screening-jupyter }
+    spec:
+      serviceAccountName: spark
+      nodeSelector:
+        spark-data: "true"
+      securityContext:
+        runAsUser: 0          # so pip install / /work writes are unrestricted
+        fsGroup: 0
+      containers:
+        - name: jupyter
+          image: gihong96/spark-screening:v1   # code + jupyterlab baked in
+          imagePullPolicy: Always
+          # CMD (jupyter lab) and code live in the image; no runtime install / cp.
+          ports:
+            - { name: http,    containerPort: 8888 }
+            - { name: driver,  containerPort: 7078 }
+            - { name: blockmgr,containerPort: 7079 }
+          env:
+            - name: SPARK_HOME
+              value: /opt/spark
+            - name: POD_IP
+              valueFrom: { fieldRef: { fieldPath: status.podIP } }
+            - name: POD_NAME
+              valueFrom: { fieldRef: { fieldPath: metadata.name } }
+            # --driver-java-options wires the AQE log4j config into the driver JVM
+            # at launch (client mode: the kernel JVM can't be reconfigured later).
+            # run_screening() then uploads each run's slice of /tmp/aqe.log to S3.
+            - name: PYSPARK_SUBMIT_ARGS
+              value: "--driver-memory 4g --driver-java-options '-Dlog4j.configurationFile=file:/work/log4j2-aqe.properties -Daqe.log.file=/tmp/aqe.log' pyspark-shell"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom: { secretKeyRef: { name: s3-creds, key: AWS_ACCESS_KEY_ID } }
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom: { secretKeyRef: { name: s3-creds, key: AWS_SECRET_ACCESS_KEY } }
+          volumeMounts:
+            - { name: bench,      mountPath: /mnt/bench, readOnly: true }
+            - { name: spark-logs, mountPath: /var/spark-logs }
+          resources:
+            requests: { cpu: "1", memory: 2Gi }
+            limits:   { cpu: "4", memory: 8Gi }
+          startupProbe:
+            httpGet: { path: /jupyter/api, port: 8888 }
+            periodSeconds: 5
+            failureThreshold: 60      # allow time for pip install
+      volumes:
+        - name: bench
+          hostPath: { path: /mnt/bench, type: Directory }
+        - name: spark-logs
+          persistentVolumeClaim: { claimName: spark-logs-pvc }

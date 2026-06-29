@@ -1,0 +1,10 @@
+# OpenJ9/Semeru J21 variant of the screening image.
+# Strategy: keep the known-good Spark image (S3A libs, entrypoint, /opt/spark, /work)
+# and swap ONLY the Java runtime to Semeru OpenJ9 — no Spark rebuild.
+FROM ibm-semeru-runtimes:open-21-jdk AS jre
+
+FROM gihong96/spark-screening:v1
+# Put Semeru in its own dir to avoid mixing with the base Temurin files.
+COPY --from=jre /opt/java/openjdk /opt/java/semeru
+ENV JAVA_HOME=/opt/java/semeru
+ENV PATH=/opt/java/semeru/bin:$PATH

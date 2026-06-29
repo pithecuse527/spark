@@ -1,0 +1,502 @@
+<svg viewBox="0 0 1418 3290" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" role="img">
+<title>TPC-H Q17 — SQL Query Tree (execution 17)</title>
+<desc>Top-down Spark SQL DAG: AdaptiveSparkPlan root, 7 base-table scans at the leaves, broadcast and sort-merge joins, AQE shuffle query stages, final HashAggregate count.</desc>
+<rect x="0" y="0" width="1418" height="3290" fill="#1b1d21"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5b626d"/></marker></defs>
+<rect x="46.0" y="2692.0" width="216.0" height="542.0" rx="10" fill="#e0a341" fill-opacity="0.05" stroke="#e0a341" stroke-opacity="0.28" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="54.0" y="2706.0" font-size="10.5" fill="#e0a341" fill-opacity="0.85" font-weight="600">BroadcastQueryStage 0 · part</text>
+<rect x="490.0" y="2508.0" width="216.0" height="450.0" rx="10" fill="#e0a341" fill-opacity="0.05" stroke="#e0a341" stroke-opacity="0.28" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="498.0" y="2522.0" font-size="10.5" fill="#e0a341" fill-opacity="0.85" font-weight="600">BroadcastQueryStage 1 · supplier</text>
+<rect x="712.0" y="2140.0" width="216.0" height="450.0" rx="10" fill="#4ade80" fill-opacity="0.05" stroke="#4ade80" stroke-opacity="0.28" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="720.0" y="2154.0" font-size="10.5" fill="#4ade80" fill-opacity="0.85" font-weight="600">ShuffleQueryStage 2 · partsupp</text>
+<rect x="934.0" y="1588.0" width="216.0" height="450.0" rx="10" fill="#4ade80" fill-opacity="0.05" stroke="#4ade80" stroke-opacity="0.28" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="942.0" y="1602.0" font-size="10.5" fill="#4ade80" fill-opacity="0.85" font-weight="600">ShuffleQueryStage 3 · orders</text>
+<rect x="1156.0" y="1220.0" width="216.0" height="450.0" rx="10" fill="#e0a341" fill-opacity="0.05" stroke="#e0a341" stroke-opacity="0.28" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1164.0" y="1234.0" font-size="10.5" fill="#e0a341" fill-opacity="0.85" font-weight="600">BroadcastQueryStage 4 · nation</text>
+<rect x="940.9" y="300.0" width="216.0" height="450.0" rx="10" fill="#4ade80" fill-opacity="0.05" stroke="#4ade80" stroke-opacity="0.28" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="948.9" y="314.0" font-size="10.5" fill="#4ade80" fill-opacity="0.85" font-weight="600">ShuffleQueryStage 8 · count</text>
+<path d="M154.0,3166.0 C154.0,3147.0 154.0,3147.0 154.0,3128.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M154.0,3074.0 C154.0,3055.0 154.0,3055.0 154.0,3036.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M154.0,2982.0 C154.0,2963.0 154.0,2963.0 154.0,2944.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M154.0,2890.0 C154.0,2871.0 154.0,2871.0 154.0,2852.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M154.0,2798.0 C154.0,2779.0 154.0,2779.0 154.0,2760.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M376.0,2982.0 C376.0,2963.0 376.0,2963.0 376.0,2944.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M376.0,2890.0 C376.0,2871.0 376.0,2871.0 376.0,2852.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M376.0,2798.0 C376.0,2779.0 376.0,2779.0 376.0,2760.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M154.0,2706.0 C154.0,2687.0 265.0,2687.0 265.0,2668.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M376.0,2706.0 C376.0,2687.0 265.0,2687.0 265.0,2668.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M265.0,2614.0 C265.0,2595.0 265.0,2595.0 265.0,2576.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M598.0,2890.0 C598.0,2871.0 598.0,2871.0 598.0,2852.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M598.0,2798.0 C598.0,2779.0 598.0,2779.0 598.0,2760.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M598.0,2706.0 C598.0,2687.0 598.0,2687.0 598.0,2668.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M598.0,2614.0 C598.0,2595.0 598.0,2595.0 598.0,2576.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M265.0,2522.0 C265.0,2503.0 431.5,2503.0 431.5,2484.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M598.0,2522.0 C598.0,2503.0 431.5,2503.0 431.5,2484.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M431.5,2430.0 C431.5,2411.0 431.5,2411.0 431.5,2392.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M431.5,2338.0 C431.5,2319.0 431.5,2319.0 431.5,2300.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M431.5,2246.0 C431.5,2227.0 431.5,2227.0 431.5,2208.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M431.5,2154.0 C431.5,2135.0 431.5,2135.0 431.5,2116.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M431.5,2062.0 C431.5,2043.0 431.5,2043.0 431.5,2024.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M820.0,2522.0 C820.0,2503.0 820.0,2503.0 820.0,2484.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M820.0,2430.0 C820.0,2411.0 820.0,2411.0 820.0,2392.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M820.0,2338.0 C820.0,2319.0 820.0,2319.0 820.0,2300.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M820.0,2246.0 C820.0,2227.0 820.0,2227.0 820.0,2208.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M820.0,2154.0 C820.0,2135.0 820.0,2135.0 820.0,2116.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M820.0,2062.0 C820.0,2043.0 820.0,2043.0 820.0,2024.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M431.5,1970.0 C431.5,1951.0 625.8,1951.0 625.8,1932.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M820.0,1970.0 C820.0,1951.0 625.8,1951.0 625.8,1932.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M625.8,1878.0 C625.8,1859.0 625.8,1859.0 625.8,1840.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M625.8,1786.0 C625.8,1767.0 625.8,1767.0 625.8,1748.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M625.8,1694.0 C625.8,1675.0 625.8,1675.0 625.8,1656.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M625.8,1602.0 C625.8,1583.0 625.8,1583.0 625.8,1564.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M625.8,1510.0 C625.8,1491.0 625.8,1491.0 625.8,1472.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1042.0,1970.0 C1042.0,1951.0 1042.0,1951.0 1042.0,1932.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1042.0,1878.0 C1042.0,1859.0 1042.0,1859.0 1042.0,1840.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1042.0,1786.0 C1042.0,1767.0 1042.0,1767.0 1042.0,1748.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1042.0,1694.0 C1042.0,1675.0 1042.0,1675.0 1042.0,1656.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1042.0,1602.0 C1042.0,1583.0 1042.0,1583.0 1042.0,1564.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1042.0,1510.0 C1042.0,1491.0 1042.0,1491.0 1042.0,1472.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M625.8,1418.0 C625.8,1399.0 833.9,1399.0 833.9,1380.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1042.0,1418.0 C1042.0,1399.0 833.9,1399.0 833.9,1380.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M833.9,1326.0 C833.9,1307.0 833.9,1307.0 833.9,1288.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1264.0,1602.0 C1264.0,1583.0 1264.0,1583.0 1264.0,1564.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1264.0,1510.0 C1264.0,1491.0 1264.0,1491.0 1264.0,1472.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1264.0,1418.0 C1264.0,1399.0 1264.0,1399.0 1264.0,1380.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1264.0,1326.0 C1264.0,1307.0 1264.0,1307.0 1264.0,1288.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M833.9,1234.0 C833.9,1215.0 1048.9,1215.0 1048.9,1196.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1264.0,1234.0 C1264.0,1215.0 1048.9,1215.0 1048.9,1196.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,1142.0 C1048.9,1123.0 1048.9,1123.0 1048.9,1104.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,1050.0 C1048.9,1031.0 1048.9,1031.0 1048.9,1012.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,958.0 C1048.9,939.0 1048.9,939.0 1048.9,920.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,866.0 C1048.9,847.0 1048.9,847.0 1048.9,828.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,774.0 C1048.9,755.0 1048.9,755.0 1048.9,736.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,682.0 C1048.9,663.0 1048.9,663.0 1048.9,644.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,590.0 C1048.9,571.0 1048.9,571.0 1048.9,552.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,498.0 C1048.9,479.0 1048.9,479.0 1048.9,460.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,406.0 C1048.9,387.0 1048.9,387.0 1048.9,368.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,314.0 C1048.9,295.0 1048.9,295.0 1048.9,276.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1048.9,222.0 C1048.9,203.0 1048.9,203.0 1048.9,184.0" fill="none" stroke="#5b626d" stroke-width="1.4" marker-end="url(#arrow)"/>
+<g>
+<rect x="60.0" y="3166.0" width="188" height="54" rx="8" fill="#2a2d33" stroke="#8b94a3" stroke-width="1.6"/>
+<rect x="60.0" y="3166.0" width="4" height="54" rx="2" fill="#8b94a3"/>
+<text x="154.0" y="3185.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Scan parquet</text>
+<text x="154.0" y="3199.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">part</text>
+<text x="154.0" y="3210.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">40,000,000 rows</text>
+</g>
+<g>
+<rect x="60.0" y="3074.0" width="188" height="54" rx="8" fill="#1f2228" stroke="#5b626d" stroke-width="1.6"/>
+<rect x="60.0" y="3074.0" width="4" height="54" rx="2" fill="#5b626d"/>
+<text x="154.0" y="3093.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ColumnarToRow</text>
+<text x="154.0" y="3107.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">40,000,000 rows</text>
+</g>
+<g>
+<rect x="60.0" y="2982.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="60.0" y="2982.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="154.0" y="3001.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Filter</text>
+<text x="154.0" y="3015.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">Contains(p_name,&#x27;green&#x27;)</text>
+</g>
+<g>
+<rect x="60.0" y="2890.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="60.0" y="2890.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="154.0" y="2909.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Project</text>
+<text x="154.0" y="2923.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">p_partkey</text>
+</g>
+<g>
+<rect x="60.0" y="2798.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="60.0" y="2798.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="154.0" y="2817.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastExchange</text>
+<text x="154.0" y="2831.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">25 → 2.18M rows</text>
+<text x="154.0" y="2842.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">192.0 MiB</text>
+</g>
+<g>
+<rect x="60.0" y="2706.0" width="188" height="54" rx="8" fill="#3a2e16" stroke="#e0a341" stroke-width="1.6"/>
+<rect x="60.0" y="2706.0" width="4" height="54" rx="2" fill="#e0a341"/>
+<text x="154.0" y="2725.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastQueryStage</text>
+<text x="154.0" y="2739.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">192.0 MiB</text>
+<text x="154.0" y="2750.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">2.18E6 rows</text>
+</g>
+<g>
+<rect x="282.0" y="2982.0" width="188" height="54" rx="8" fill="#2a2d33" stroke="#8b94a3" stroke-width="1.6"/>
+<rect x="282.0" y="2982.0" width="4" height="54" rx="2" fill="#8b94a3"/>
+<text x="376.0" y="3001.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Scan parquet</text>
+<text x="376.0" y="3015.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">lineitem</text>
+<text x="376.0" y="3026.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1,200,018,434 rows</text>
+</g>
+<g>
+<rect x="282.0" y="2890.0" width="188" height="54" rx="8" fill="#1f2228" stroke="#5b626d" stroke-width="1.6"/>
+<rect x="282.0" y="2890.0" width="4" height="54" rx="2" fill="#5b626d"/>
+<text x="376.0" y="2909.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ColumnarToRow</text>
+<text x="376.0" y="2923.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1.20E9 rows</text>
+</g>
+<g>
+<rect x="282.0" y="2798.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="282.0" y="2798.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="376.0" y="2817.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Filter</text>
+<text x="376.0" y="2831.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">isnotnull keys</text>
+</g>
+<g>
+<rect x="282.0" y="2706.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="282.0" y="2706.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="376.0" y="2725.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Project</text>
+<text x="376.0" y="2739.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">l_orderkey,l_partkey,l_suppkey</text>
+</g>
+<g>
+<rect x="171.0" y="2614.0" width="188" height="54" rx="8" fill="#3a2e16" stroke="#e0a341" stroke-width="1.6"/>
+<rect x="171.0" y="2614.0" width="4" height="54" rx="2" fill="#e0a341"/>
+<text x="265.0" y="2633.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastHashJoin</text>
+<text x="265.0" y="2647.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">Inner — BuildLeft</text>
+<text x="265.0" y="2658.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">p_partkey = l_partkey</text>
+</g>
+<g>
+<rect x="171.0" y="2522.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="171.0" y="2522.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="265.0" y="2541.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Project</text>
+<text x="265.0" y="2555.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">l_orderkey,l_partkey,l_suppkey</text>
+</g>
+<g>
+<rect x="504.0" y="2890.0" width="188" height="54" rx="8" fill="#2a2d33" stroke="#8b94a3" stroke-width="1.6"/>
+<rect x="504.0" y="2890.0" width="4" height="54" rx="2" fill="#8b94a3"/>
+<text x="598.0" y="2909.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Scan parquet</text>
+<text x="598.0" y="2923.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">supplier</text>
+<text x="598.0" y="2934.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">2,000,000 rows</text>
+</g>
+<g>
+<rect x="504.0" y="2798.0" width="188" height="54" rx="8" fill="#1f2228" stroke="#5b626d" stroke-width="1.6"/>
+<rect x="504.0" y="2798.0" width="4" height="54" rx="2" fill="#5b626d"/>
+<text x="598.0" y="2817.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ColumnarToRow</text>
+<text x="598.0" y="2831.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">2,000,000 rows</text>
+</g>
+<g>
+<rect x="504.0" y="2706.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="504.0" y="2706.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="598.0" y="2725.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Filter</text>
+<text x="598.0" y="2739.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">isnotnull keys</text>
+</g>
+<g>
+<rect x="504.0" y="2614.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="504.0" y="2614.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="598.0" y="2633.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastExchange</text>
+<text x="598.0" y="2647.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">2,000,000 rows</text>
+<text x="598.0" y="2658.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">79.3 MiB</text>
+</g>
+<g>
+<rect x="504.0" y="2522.0" width="188" height="54" rx="8" fill="#3a2e16" stroke="#e0a341" stroke-width="1.6"/>
+<rect x="504.0" y="2522.0" width="4" height="54" rx="2" fill="#e0a341"/>
+<text x="598.0" y="2541.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastQueryStage</text>
+<text x="598.0" y="2555.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">79.3 MiB</text>
+<text x="598.0" y="2566.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">2.00E6 rows</text>
+</g>
+<g>
+<rect x="337.5" y="2430.0" width="188" height="54" rx="8" fill="#3a2e16" stroke="#e0a341" stroke-width="1.6"/>
+<rect x="337.5" y="2430.0" width="4" height="54" rx="2" fill="#e0a341"/>
+<text x="431.5" y="2449.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastHashJoin</text>
+<text x="431.5" y="2463.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">Inner — BuildRight</text>
+<text x="431.5" y="2474.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">l_suppkey = s_suppkey</text>
+</g>
+<g>
+<rect x="337.5" y="2338.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="337.5" y="2338.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="431.5" y="2357.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Project</text>
+<text x="431.5" y="2371.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">+ s_nationkey</text>
+</g>
+<g>
+<rect x="337.5" y="2246.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="337.5" y="2246.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="431.5" y="2265.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Exchange</text>
+<text x="431.5" y="2279.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">hash(l_suppkey,l_partkey)</text>
+<text x="431.5" y="2290.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">65,269,047 rows · 2.4 GiB</text>
+</g>
+<g>
+<rect x="337.5" y="2154.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="337.5" y="2154.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="431.5" y="2173.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ShuffleQueryStage</text>
+<text x="431.5" y="2187.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">2.4 GiB</text>
+<text x="431.5" y="2198.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">6.53E7 rows</text>
+</g>
+<g>
+<rect x="337.5" y="2062.0" width="188" height="54" rx="8" fill="#1d3326" stroke="#3fbf6f" stroke-width="1.6"/>
+<rect x="337.5" y="2062.0" width="4" height="54" rx="2" fill="#3fbf6f"/>
+<text x="431.5" y="2081.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">AQEShuffleRead</text>
+<text x="431.5" y="2095.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">coalesced 67 part</text>
+</g>
+<g>
+<rect x="337.5" y="1970.0" width="188" height="54" rx="8" fill="#23262b" stroke="#7f8794" stroke-width="1.6"/>
+<rect x="337.5" y="1970.0" width="4" height="54" rx="2" fill="#7f8794"/>
+<text x="431.5" y="1989.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Sort</text>
+<text x="431.5" y="2003.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">l_suppkey, l_partkey</text>
+</g>
+<g>
+<rect x="726.0" y="2522.0" width="188" height="54" rx="8" fill="#2a2d33" stroke="#8b94a3" stroke-width="1.6"/>
+<rect x="726.0" y="2522.0" width="4" height="54" rx="2" fill="#8b94a3"/>
+<text x="820.0" y="2541.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Scan parquet</text>
+<text x="820.0" y="2555.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">partsupp</text>
+<text x="820.0" y="2566.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">160,000,000 rows</text>
+</g>
+<g>
+<rect x="726.0" y="2430.0" width="188" height="54" rx="8" fill="#1f2228" stroke="#5b626d" stroke-width="1.6"/>
+<rect x="726.0" y="2430.0" width="4" height="54" rx="2" fill="#5b626d"/>
+<text x="820.0" y="2449.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ColumnarToRow</text>
+<text x="820.0" y="2463.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">160,000,000 rows</text>
+</g>
+<g>
+<rect x="726.0" y="2338.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="726.0" y="2338.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="820.0" y="2357.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Filter</text>
+<text x="820.0" y="2371.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">isnotnull keys</text>
+</g>
+<g>
+<rect x="726.0" y="2246.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="726.0" y="2246.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="820.0" y="2265.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Exchange</text>
+<text x="820.0" y="2279.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">hash(ps_suppkey,ps_partkey)</text>
+<text x="820.0" y="2290.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">160M rows · 3.6 GiB</text>
+</g>
+<g>
+<rect x="726.0" y="2154.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="726.0" y="2154.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="820.0" y="2173.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ShuffleQueryStage</text>
+<text x="820.0" y="2187.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">3.6 GiB</text>
+<text x="820.0" y="2198.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1.60E8 rows</text>
+</g>
+<g>
+<rect x="726.0" y="2062.0" width="188" height="54" rx="8" fill="#1d3326" stroke="#3fbf6f" stroke-width="1.6"/>
+<rect x="726.0" y="2062.0" width="4" height="54" rx="2" fill="#3fbf6f"/>
+<text x="820.0" y="2081.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">AQEShuffleRead</text>
+<text x="820.0" y="2095.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">coalesced 67 part</text>
+</g>
+<g>
+<rect x="726.0" y="1970.0" width="188" height="54" rx="8" fill="#23262b" stroke="#7f8794" stroke-width="1.6"/>
+<rect x="726.0" y="1970.0" width="4" height="54" rx="2" fill="#7f8794"/>
+<text x="820.0" y="1989.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Sort</text>
+<text x="820.0" y="2003.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">ps_suppkey, ps_partkey</text>
+</g>
+<g>
+<rect x="531.8" y="1878.0" width="188" height="54" rx="8" fill="#15314a" stroke="#5aa9e6" stroke-width="1.6"/>
+<rect x="531.8" y="1878.0" width="4" height="54" rx="2" fill="#5aa9e6"/>
+<text x="625.8" y="1897.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">SortMergeJoin</text>
+<text x="625.8" y="1911.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">Inner</text>
+<text x="625.8" y="1922.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">l_suppkey,l_partkey = ps_*</text>
+</g>
+<g>
+<rect x="531.8" y="1786.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="531.8" y="1786.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="625.8" y="1805.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Project</text>
+<text x="625.8" y="1819.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">l_orderkey, s_nationkey</text>
+</g>
+<g>
+<rect x="531.8" y="1694.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="531.8" y="1694.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="625.8" y="1713.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Exchange</text>
+<text x="625.8" y="1727.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">hash(l_orderkey)</text>
+<text x="625.8" y="1738.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">65.27M rows · 1493.9 MiB</text>
+</g>
+<g>
+<rect x="531.8" y="1602.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="531.8" y="1602.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="625.8" y="1621.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ShuffleQueryStage</text>
+<text x="625.8" y="1635.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1493.9 MiB</text>
+<text x="625.8" y="1646.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">6.53E7 rows</text>
+</g>
+<g>
+<rect x="531.8" y="1510.0" width="188" height="54" rx="8" fill="#1d3326" stroke="#3fbf6f" stroke-width="1.6"/>
+<rect x="531.8" y="1510.0" width="4" height="54" rx="2" fill="#3fbf6f"/>
+<text x="625.8" y="1529.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">AQEShuffleRead</text>
+<text x="625.8" y="1543.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">coalesced 50 part</text>
+</g>
+<g>
+<rect x="531.8" y="1418.0" width="188" height="54" rx="8" fill="#23262b" stroke="#7f8794" stroke-width="1.6"/>
+<rect x="531.8" y="1418.0" width="4" height="54" rx="2" fill="#7f8794"/>
+<text x="625.8" y="1437.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Sort</text>
+<text x="625.8" y="1451.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">l_orderkey</text>
+</g>
+<g>
+<rect x="948.0" y="1970.0" width="188" height="54" rx="8" fill="#2a2d33" stroke="#8b94a3" stroke-width="1.6"/>
+<rect x="948.0" y="1970.0" width="4" height="54" rx="2" fill="#8b94a3"/>
+<text x="1042.0" y="1989.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Scan parquet</text>
+<text x="1042.0" y="2003.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">orders</text>
+<text x="1042.0" y="2014.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">300,000,000 rows</text>
+</g>
+<g>
+<rect x="948.0" y="1878.0" width="188" height="54" rx="8" fill="#1f2228" stroke="#5b626d" stroke-width="1.6"/>
+<rect x="948.0" y="1878.0" width="4" height="54" rx="2" fill="#5b626d"/>
+<text x="1042.0" y="1897.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ColumnarToRow</text>
+<text x="1042.0" y="1911.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">300,000,000 rows</text>
+</g>
+<g>
+<rect x="948.0" y="1786.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="948.0" y="1786.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="1042.0" y="1805.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Filter</text>
+<text x="1042.0" y="1819.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">isnotnull(o_orderkey)</text>
+</g>
+<g>
+<rect x="948.0" y="1694.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="948.0" y="1694.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="1042.0" y="1713.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Exchange</text>
+<text x="1042.0" y="1727.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">hash(o_orderkey)</text>
+<text x="1042.0" y="1738.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">300M rows · 6.7 GiB</text>
+</g>
+<g>
+<rect x="948.0" y="1602.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="948.0" y="1602.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="1042.0" y="1621.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ShuffleQueryStage</text>
+<text x="1042.0" y="1635.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">6.7 GiB</text>
+<text x="1042.0" y="1646.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">3.00E8 rows</text>
+</g>
+<g>
+<rect x="948.0" y="1510.0" width="188" height="54" rx="8" fill="#1d3326" stroke="#3fbf6f" stroke-width="1.6"/>
+<rect x="948.0" y="1510.0" width="4" height="54" rx="2" fill="#3fbf6f"/>
+<text x="1042.0" y="1529.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">AQEShuffleRead</text>
+<text x="1042.0" y="1543.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">coalesced 67 part</text>
+</g>
+<g>
+<rect x="948.0" y="1418.0" width="188" height="54" rx="8" fill="#23262b" stroke="#7f8794" stroke-width="1.6"/>
+<rect x="948.0" y="1418.0" width="4" height="54" rx="2" fill="#7f8794"/>
+<text x="1042.0" y="1437.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Sort</text>
+<text x="1042.0" y="1451.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">o_orderkey</text>
+</g>
+<g>
+<rect x="739.9" y="1326.0" width="188" height="54" rx="8" fill="#15314a" stroke="#5aa9e6" stroke-width="1.6"/>
+<rect x="739.9" y="1326.0" width="4" height="54" rx="2" fill="#5aa9e6"/>
+<text x="833.9" y="1345.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">SortMergeJoin</text>
+<text x="833.9" y="1359.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">Inner</text>
+<text x="833.9" y="1370.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">l_orderkey = o_orderkey</text>
+</g>
+<g>
+<rect x="739.9" y="1234.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="739.9" y="1234.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="833.9" y="1253.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Project</text>
+<text x="833.9" y="1267.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">s_nationkey, o_orderdate</text>
+</g>
+<g>
+<rect x="1170.0" y="1602.0" width="188" height="54" rx="8" fill="#2a2d33" stroke="#8b94a3" stroke-width="1.6"/>
+<rect x="1170.0" y="1602.0" width="4" height="54" rx="2" fill="#8b94a3"/>
+<text x="1264.0" y="1621.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Scan parquet</text>
+<text x="1264.0" y="1635.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">nation</text>
+<text x="1264.0" y="1646.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">25 rows</text>
+</g>
+<g>
+<rect x="1170.0" y="1510.0" width="188" height="54" rx="8" fill="#1f2228" stroke="#5b626d" stroke-width="1.6"/>
+<rect x="1170.0" y="1510.0" width="4" height="54" rx="2" fill="#5b626d"/>
+<text x="1264.0" y="1529.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ColumnarToRow</text>
+<text x="1264.0" y="1543.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">25 rows</text>
+</g>
+<g>
+<rect x="1170.0" y="1418.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="1170.0" y="1418.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="1264.0" y="1437.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Filter</text>
+<text x="1264.0" y="1451.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">isnotnull(n_nationkey)</text>
+</g>
+<g>
+<rect x="1170.0" y="1326.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="1170.0" y="1326.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="1264.0" y="1345.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastExchange</text>
+<text x="1264.0" y="1359.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">25 rows</text>
+<text x="1264.0" y="1370.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1024.2 KiB</text>
+</g>
+<g>
+<rect x="1170.0" y="1234.0" width="188" height="54" rx="8" fill="#3a2e16" stroke="#e0a341" stroke-width="1.6"/>
+<rect x="1170.0" y="1234.0" width="4" height="54" rx="2" fill="#e0a341"/>
+<text x="1264.0" y="1253.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastQueryStage</text>
+<text x="1264.0" y="1267.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1024.2 KiB</text>
+<text x="1264.0" y="1278.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">25 rows</text>
+</g>
+<g>
+<rect x="954.9" y="1142.0" width="188" height="54" rx="8" fill="#3a2e16" stroke="#e0a341" stroke-width="1.6"/>
+<rect x="954.9" y="1142.0" width="4" height="54" rx="2" fill="#e0a341"/>
+<text x="1048.9" y="1161.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">BroadcastHashJoin</text>
+<text x="1048.9" y="1175.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">Inner — BuildRight</text>
+<text x="1048.9" y="1186.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">s_nationkey = n_nationkey</text>
+</g>
+<g>
+<rect x="954.9" y="1050.0" width="188" height="54" rx="8" fill="#23262b" stroke="#6b7280" stroke-width="1.6"/>
+<rect x="954.9" y="1050.0" width="4" height="54" rx="2" fill="#6b7280"/>
+<text x="1048.9" y="1069.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Project</text>
+<text x="1048.9" y="1083.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">nation, o_year</text>
+</g>
+<g>
+<rect x="954.9" y="958.0" width="188" height="54" rx="8" fill="#2c2440" stroke="#b39ae0" stroke-width="1.6"/>
+<rect x="954.9" y="958.0" width="4" height="54" rx="2" fill="#b39ae0"/>
+<text x="1048.9" y="977.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">HashAggregate</text>
+<text x="1048.9" y="991.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">group by nation, o_year</text>
+<text x="1048.9" y="1002.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">8,750 rows</text>
+</g>
+<g>
+<rect x="954.9" y="866.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="954.9" y="866.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="1048.9" y="885.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Exchange</text>
+<text x="1048.9" y="899.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">hash(nation,o_year)</text>
+<text x="1048.9" y="910.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">8,750 rows · 289.8 KiB</text>
+</g>
+<g>
+<rect x="954.9" y="774.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="954.9" y="774.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="1048.9" y="793.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ShuffleQueryStage</text>
+<text x="1048.9" y="807.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">289.8 KiB</text>
+<text x="1048.9" y="818.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">8.75E3 rows</text>
+</g>
+<g>
+<rect x="954.9" y="682.0" width="188" height="54" rx="8" fill="#1d3326" stroke="#3fbf6f" stroke-width="1.6"/>
+<rect x="954.9" y="682.0" width="4" height="54" rx="2" fill="#3fbf6f"/>
+<text x="1048.9" y="701.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">AQEShuffleRead</text>
+<text x="1048.9" y="715.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">coalesced 1 part</text>
+</g>
+<g>
+<rect x="954.9" y="590.0" width="188" height="54" rx="8" fill="#2c2440" stroke="#b39ae0" stroke-width="1.6"/>
+<rect x="954.9" y="590.0" width="4" height="54" rx="2" fill="#b39ae0"/>
+<text x="1048.9" y="609.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">HashAggregate</text>
+<text x="1048.9" y="623.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">group by nation, o_year</text>
+<text x="1048.9" y="634.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">175 rows</text>
+</g>
+<g>
+<rect x="954.9" y="498.0" width="188" height="54" rx="8" fill="#2c2440" stroke="#b39ae0" stroke-width="1.6"/>
+<rect x="954.9" y="498.0" width="4" height="54" rx="2" fill="#b39ae0"/>
+<text x="1048.9" y="517.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">HashAggregate</text>
+<text x="1048.9" y="531.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">partial_count(1)</text>
+<text x="1048.9" y="542.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1 row</text>
+</g>
+<g>
+<rect x="954.9" y="406.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="954.9" y="406.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="1048.9" y="425.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">Exchange</text>
+<text x="1048.9" y="439.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">SinglePartition</text>
+<text x="1048.9" y="450.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1 row · 16.0 B</text>
+</g>
+<g>
+<rect x="954.9" y="314.0" width="188" height="54" rx="8" fill="#16331f" stroke="#4ade80" stroke-width="1.6"/>
+<rect x="954.9" y="314.0" width="4" height="54" rx="2" fill="#4ade80"/>
+<text x="1048.9" y="333.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">ShuffleQueryStage</text>
+<text x="1048.9" y="347.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">16.0 B</text>
+<text x="1048.9" y="358.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1 row</text>
+</g>
+<g>
+<rect x="954.9" y="222.0" width="188" height="54" rx="8" fill="#2c2440" stroke="#b39ae0" stroke-width="1.6"/>
+<rect x="954.9" y="222.0" width="4" height="54" rx="2" fill="#b39ae0"/>
+<text x="1048.9" y="241.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">HashAggregate</text>
+<text x="1048.9" y="255.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">count(1)</text>
+<text x="1048.9" y="266.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">1 row</text>
+</g>
+<g>
+<rect x="954.9" y="130.0" width="188" height="54" rx="8" fill="#322033" stroke="#d98fd6" stroke-width="1.6"/>
+<rect x="954.9" y="130.0" width="4" height="54" rx="2" fill="#d98fd6"/>
+<text x="1048.9" y="149.0" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ededed">AdaptiveSparkPlan</text>
+<text x="1048.9" y="163.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">isFinalPlan = true</text>
+<text x="1048.9" y="174.0" text-anchor="middle" font-size="9.5" fill="#a6adb8">count = 23,499...</text>
+</g>
+<text x="60" y="38" font-size="22" font-weight="700" fill="#ededed">TPC-H Q17 — SQL Query Tree</text>
+<text x="60" y="60" font-size="13" fill="#a6adb8">app spark-6554076254d44fe891c6fb6e664c3673 · execution 17 · 61 nodes · 60 edges · duration 179.8 s · count(1)</text>
+<text x="60" y="80" font-size="12" fill="#a6adb8">Top-down DAG (Final Plan). Root AdaptiveSparkPlan at top; 7 base-table scans at the bottom. Arrows point from child output to parent input.</text>
+<rect x="1076" y="14" width="318" height="130" rx="8" fill="#23262b" stroke="#3a3f47" stroke-width="1"/>
+<text x="1088" y="30" font-size="12" font-weight="700" fill="#ededed">Legend</text>
+<rect x="1088" y="41" width="13" height="13" rx="3" fill="#e0a341"/>
+<text x="1108" y="51" font-size="11" fill="#a6adb8">BroadcastHashJoin</text>
+<rect x="1088" y="59" width="13" height="13" rx="3" fill="#5aa9e6"/>
+<text x="1108" y="69" font-size="11" fill="#a6adb8">SortMergeJoin</text>
+<rect x="1088" y="77" width="13" height="13" rx="3" fill="#4ade80"/>
+<text x="1108" y="87" font-size="11" fill="#a6adb8">Exchange / Shuffle / QueryStage</text>
+<rect x="1088" y="95" width="13" height="13" rx="3" fill="#b39ae0"/>
+<text x="1108" y="105" font-size="11" fill="#a6adb8">HashAggregate</text>
+<rect x="1088" y="113" width="13" height="13" rx="3" fill="#d98fd6"/>
+<text x="1108" y="123" font-size="11" fill="#a6adb8">AdaptiveSparkPlan (root)</text>
+<rect x="1088" y="131" width="13" height="13" rx="3" fill="#8b94a3"/>
+<text x="1108" y="141" font-size="11" fill="#a6adb8">Scan parquet / Sort / Project</text>
+</svg>

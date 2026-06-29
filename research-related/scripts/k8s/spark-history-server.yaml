@@ -1,0 +1,111 @@
+# Spark History Server (namespace: spark). Reads s3a:// event logs.
+# Upgraded to Spark 4.1.2 by reusing the screening image (4.1.2 + S3A baked in).
+#
+# Apply: kubectl apply -f spark-history-server.yaml
+# Open:  http://<ingress-host>/spark-history  (basic-auth)
+#
+# Note: Helm release "spark-hs" originally owns these (labels kept). The SDK-v1
+# credentials provider arg was dropped — Spark 4.1.2 ships Hadoop 3.4.2 (AWS SDK
+# v2), whose default chain reads AWS_* from the s3-creds secret directly.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-hs-spark-history-server
+  namespace: spark
+  labels:
+    app.kubernetes.io/instance: spark-hs
+    app.kubernetes.io/name: spark-history-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: spark-hs
+      app.kubernetes.io/name: spark-history-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: spark-hs
+        app.kubernetes.io/name: spark-history-server
+    spec:
+      serviceAccountName: spark
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+      containers:
+        - name: spark-history-server
+          image: gihong96/spark-screening:v1
+          imagePullPolicy: Always
+          command: ["/opt/spark/bin/spark-class"]
+          args: ["org.apache.spark.deploy.history.HistoryServer"]
+          env:
+            - name: SPARK_NO_DAEMONIZE
+              value: "true"
+            - name: HADOOP_USER_NAME
+              value: spark
+            - name: SPARK_HISTORY_OPTS
+              value: >-
+                -Dspark.history.ui.port=18080
+                -Duser.name=spark -Dspark.user=spark
+                -Dspark.history.fs.logDirectory=s3a://spark-obj-storage/event-logs/
+                -Dspark.ui.reverseProxy=true
+                -Dspark.ui.reverseProxyUrl=http://static.250.169.217.95.clients.your-server.de/spark-history
+                -Dspark.ui.proxyBase=/spark-history
+                -Dspark.hadoop.fs.s3a.endpoint=https://hel1.your-objectstorage.com
+                -Dspark.hadoop.fs.s3a.path.style.access=true
+          envFrom:
+            - secretRef:
+                name: s3-creds
+          ports:
+            - name: http
+              containerPort: 18080
+          resources:
+            requests: { cpu: "1", memory: 1000Mi }
+            limits:   { cpu: "2", memory: 2000Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-hs-spark-history-server
+  namespace: spark
+  labels:
+    app.kubernetes.io/instance: spark-hs
+    app.kubernetes.io/name: spark-history-server
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/instance: spark-hs
+    app.kubernetes.io/name: spark-history-server
+  ports:
+    - name: http
+      port: 18080
+      targetPort: http
+      protocol: TCP
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: spark-hs-spark-history-server-route
+  namespace: spark
+  labels:
+    app.kubernetes.io/instance: spark-hs
+    app.kubernetes.io/name: spark-history-server
+spec:
+  entryPoints: [web]
+  routes:
+    - kind: Rule
+      match: PathPrefix(`/spark-history`)
+      middlewares:
+        - name: basic-auth
+        - name: strip-spark-hs-spark-history-server
+      services:
+        - name: spark-hs-spark-history-server
+          port: 18080
+    - kind: Rule
+      match: PathPrefix(`/history/`)
+      middlewares:
+        - name: basic-auth
+      services:
+        - name: spark-hs-spark-history-server
+          port: 18080
