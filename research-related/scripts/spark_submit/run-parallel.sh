@@ -22,14 +22,15 @@ set -uo pipefail
 #     "experiments": [
 #       { "query":"q64", "gc":"g1", "heap":"2g", "aqe":false, "broadcast":"off",
 #         "benchmark":"tpcds", "scale":200, "cores":2, "instances":2,
-#         "driver_memory":"4g", "overhead":"512m", "region":"8m",
+#         "driver_memory":"4g", "overhead":"512m", "region":"8m", "node":"worker1",
 #         "data_base":"s3a://spark-obj-storage" },
 #       { "query":"q9", "benchmark":"tpch", "gc":"shen", "heap":"4g", "aqe":false }
 #     ]
 #   }
 #   Only "query" is REQUIRED. Every other key is optional and falls back to
 #   run-screening.sh's defaults: gc=g1, benchmark=tpcds, scale=200, aqe=true, heap=2g,
-#   cores=2, instances=2, driver_memory=4g, overhead=512m, broadcast=off, region=none.
+#   cores=2, instances=2, driver_memory=4g, overhead=512m, broadcast=off, region=none,
+#   node=none.
 #
 # Env: SPARK_HOME + a working kubectl context (ns `spark`) required (unless --dry-run).
 # =============================================================================
@@ -65,9 +66,11 @@ import json, sys
 FLAG = {"query":"--query","gc":"--gc","benchmark":"--bench","bench":"--bench",
         "scale":"--scale","aqe":"--aqe","heap":"--heap","cores":"--cores",
         "instances":"--instances","driver_memory":"--driver-mem","overhead":"--overhead",
-        "broadcast":"--broadcast","region":"--region","data_base":"--data-base"}
+        "broadcast":"--broadcast","region":"--region","node":"--node","data_base":"--data-base",
+        "extra_exec_opts":"--extra-exec-opts","tag":"--tag"}
 ORDER = ["query","gc","benchmark","bench","scale","aqe","heap","cores","instances",
-         "driver_memory","overhead","broadcast","region","data_base"]
+         "driver_memory","overhead","broadcast","region","node","data_base",
+         "extra_exec_opts","tag"]
 try:
     doc = json.load(open(sys.argv[1]))
 except Exception as e:
@@ -194,4 +197,5 @@ column -t -s "$(printf '\t')" "$SUMMARY"
 fails="$(awk -F'\t' 'NR>1 && $2=="FAIL"' "$SUMMARY" | wc -l | tr -d ' ')"
 echo "----------------------------------------------"
 echo "  failures: $fails / ${#SPECS[@]}   (FAIL = submit!=0 OR driver-exit!=0)"
+echo "  collect:  ./collect-run-artifacts.sh $STAMP"
 [ "$fails" -eq 0 ]

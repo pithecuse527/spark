@@ -18,21 +18,26 @@ set -euo pipefail
 #   --overhead <sz>    default 512m   spark.executor.memoryOverhead
 #   --broadcast <v>    default off.   "off" (=-1, force SMJ) | a size like 128MB
 #   --region <sz>      default "".    G1 only: -XX:G1HeapRegionSize (e.g. 8m)
-#   --data-base <uri>  default s3a://spark-obj-storage
+#   --node <name>      default "".    Pin driver + executors to one Kubernetes node hostname.
+#   --data-base <uri>  default file:///mnt/bench (LOCAL disk; pass s3a://spark-obj-storage for S3)
+#   --extra-exec-opts <s>  default "".  Extra executor JVM opts (e.g. -XX:NativeMemoryTracking=summary)
+#   --tag <s>          default "".    Suffix appended to RUN_ID (disambiguate reruns)
 #   DRY_RUN=1 (env)    print resolved image + JVM opts and exit without submitting
 #
-# Pod / run name = {bench}-{query}-{scale}-{gc}-{aqe}-{heap}-{cores}[-r<region>]  (lowercased).
+# Pod / run name = {bench}-{query}-{scale}-{gc}-{aqe}-{heap}-{cores}[-r<region>][-n<node>]  (lowercased).
 #
 # Examples:
 #   ./run-screening.sh --query q38 --gc shen --heap 4g --aqe false
 #   ./run-screening.sh --query q9 --bench tpch --gc zgc --heap 2g --broadcast off --aqe false
 #   ./run-screening.sh --query q64 --gc g1 --heap 2g --region 8m --aqe false
+#   ./run-screening.sh --query q38 --gc g1 --heap 2g --region 1m --node worker1 --aqe false
 # =============================================================================
 
 # --- defaults ---
 QUERY=""; GC="g1"; BENCHMARK="tpcds"; SCALE="200"; AQE_ENABLED="true"
 HEAP="2g"; CORES="2"; INSTANCES="2"; DRIVER_MEMORY="4g"; OVERHEAD="512m"
-BROADCAST="off"; REGION=""; DATA_BASE="s3a://spark-obj-storage"
+BROADCAST="off"; REGION=""; NODE=""; DATA_BASE="file:///mnt/bench"
+EXTRA_EXEC_OPTS=""; TAG=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -48,14 +53,22 @@ while [ $# -gt 0 ]; do
     --overhead)     OVERHEAD="${2:?}"; shift ;;
     --broadcast)    BROADCAST="${2:?}"; shift ;;
     --region)       REGION="${2:?}"; shift ;;
+    --node)         NODE="${2:?}"; shift ;;
     --data-base)    DATA_BASE="${2:?}"; shift ;;
-    -h|--help)      sed -n '4,33p' "$0"; exit 0 ;;
+    --extra-exec-opts) EXTRA_EXEC_OPTS="${2:?}"; shift ;;
+    --tag)          TAG="${2:?}"; shift ;;
+    -h|--help)      sed -n '4,35p' "$0"; exit 0 ;;
     *) echo "ERROR: unknown arg '$1' (see --help)"; exit 2 ;;
   esac
   shift
 done
 [ -n "$QUERY" ] || { echo "ERROR: --query is required (see --help)"; exit 2; }
 case "$AQE_ENABLED" in true|false) ;; *) echo "ERROR: --aqe must be true|false, got '$AQE_ENABLED'"; exit 2 ;; esac
+if [ -n "$NODE" ]; then
+  case "$NODE" in
+    *[!A-Za-z0-9_.-]*) echo "ERROR: --node must be a Kubernetes node hostname (letters/digits/dot/underscore/hyphen), got '$NODE'"; exit 2 ;;
+  esac
+fi
 
 # --- Benchmark -> main class + data location ---
 case "$BENCHMARK" in
@@ -98,9 +111,11 @@ case "$GC" in
     exit 2 ;;
 esac
 
-# --- Run / pod name: {bench}-{query}-{scale}-{gc}-{aqe}-{heap}-{cores}[-r<region>], RFC1123-safe ---
+# --- Run / pod name: {bench}-{query}-{scale}-{gc}-{aqe}-{heap}-{cores}[-r<region>][-n<node>], RFC1123-safe ---
 RUN_ID="${BENCHMARK}-${QUERY}-${SCALE}-${GC}-${AQE_ENABLED}-${HEAP}-${CORES}"
 [ -n "$REGION" ] && RUN_ID="${RUN_ID}-r${REGION}"
+[ -n "$NODE" ] && RUN_ID="${RUN_ID}-n${NODE}"
+[ -n "$TAG" ] && RUN_ID="${RUN_ID}-${TAG}"
 RUN_ID="$(printf '%s' "$RUN_ID" | tr '[:upper:]_' '[:lower:]-')"
 
 # Spark downloads the remote primary jar into the container CWD (READ-ONLY /work in the
@@ -128,6 +143,10 @@ SPARK_MASTER_URL="$(kubectl config view --minify -o jsonpath='{.clusters[0].clus
 WORKLOAD_JAR_URI="s3a://spark-obj-storage/jars/sql-workloads-1.0.jar"
 OBJ_STORAGE_ENDPOINT="${OBJ_STORAGE_ENDPOINT:-https://hel1.your-objectstorage.com}"
 
+if [ -n "$NODE" ]; then
+  kubectl get node "$NODE" >/dev/null 2>&1 || { echo "ERROR: Kubernetes node not found: $NODE"; exit 2; }
+fi
+
 # --- Print experiment config ---
 echo "=============================================="
 echo "GC Screening: $RUN_ID"
@@ -141,6 +160,7 @@ echo "  Cores x instances:  $CORES x $INSTANCES"
 echo "  Driver memory:      $DRIVER_MEMORY"
 echo "  Broadcast thr:      $BC  (off=-1)"
 echo "  G1 region size:     ${REGION:-<ergonomic>}"
+echo "  Node pin:           ${NODE:-<none>}"
 echo "  Data location:      $DATA_LOCATION"
 echo "  Timestamp:          $TIMESTAMP"
 echo "=============================================="
@@ -154,9 +174,12 @@ else
   EXECUTOR_JAVA_OPTS="$GC_OPTS -XX:+PrintCommandLineFlags -Xlog:$GC_LOG_SEL:file=$GC_LOGS_DIR/$TIMESTAMP-$RUN_ID-executor-{{EXECUTOR_ID}}.log:utctime,uptime,level,tags:filecount=10,filesize=20m"
 fi
 
+# Append caller-supplied extra executor JVM opts (e.g. -XX:NativeMemoryTracking=summary)
+[ -n "$EXTRA_EXEC_OPTS" ] && EXECUTOR_JAVA_OPTS="$EXECUTOR_JAVA_OPTS $EXTRA_EXEC_OPTS"
+
 if [ "${DRY_RUN:-0}" = "1" ]; then
   echo "DRY_RUN: image=$IMAGE  family=$JVM_FAMILY  run_id=$RUN_ID"
-  echo "DRY_RUN: heap=$HEAP cores=$CORES instances=$INSTANCES driver_mem=$DRIVER_MEMORY overhead=$OVERHEAD broadcast=$BC aqe=$AQE_ENABLED"
+  echo "DRY_RUN: heap=$HEAP cores=$CORES instances=$INSTANCES driver_mem=$DRIVER_MEMORY overhead=$OVERHEAD broadcast=$BC aqe=$AQE_ENABLED node=${NODE:-<none>}"
   echo "DRY_RUN: driver_opts=$DRIVER_JAVA_OPTS"
   echo "DRY_RUN: exec_opts=$EXECUTOR_JAVA_OPTS"
   exit 0
@@ -205,6 +228,7 @@ fi
   --conf spark.kubernetes.driver.volumes.hostPath.bench.options.path=/mnt/bench \
   --conf spark.kubernetes.driver.volumes.hostPath.bench.options.type=Directory \
   --conf spark.kubernetes.node.selector.spark-data=true \
+  ${NODE:+--conf spark.kubernetes.node.selector.kubernetes.io/hostname=$NODE} \
   --conf spark.sql.adaptive.enabled=$AQE_ENABLED \
   --conf spark.sql.adaptive.autoBroadcastJoinThreshold="$BC" \
   --conf spark.sql.autoBroadcastJoinThreshold="$BC" \
@@ -220,8 +244,8 @@ EXIT_CODE=$?
 
 # Driver pod status (spark-submit may return 0 even on driver failure). RUN_ID is already
 # the normalized lowercase-hyphen form Spark uses for the spark-app-name label.
-DRIVER_POD=$(kubectl get pods -n spark --no-headers -l "spark-app-name=$RUN_ID" 2>/dev/null | grep driver || true)
-DRIVER_POD=$(echo "$DRIVER_POD" | awk '{print $1}' | head -1)
+DRIVER_POD=$(kubectl get pods -n spark --sort-by=.metadata.creationTimestamp --no-headers -l "spark-app-name=$RUN_ID" 2>/dev/null | grep driver || true)
+DRIVER_POD=$(echo "$DRIVER_POD" | awk '{print $1}' | tail -1)
 if [ -n "$DRIVER_POD" ]; then
   POD_STATUS=$(kubectl get pod "$DRIVER_POD" -n spark -o jsonpath='{.status.containerStatuses[0].state.terminated.exitCode}' 2>/dev/null || true)
   if [ -n "$POD_STATUS" ] && [ "$POD_STATUS" != "0" ]; then EXIT_CODE="$POD_STATUS"; fi
